@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yesu Vara Prasad Mamidi | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050505;
+    --electric-wine: #e0115f;
+    --electric-wine-soft: #ff2d6f;
+    --text: #f5f0f2;
+    --text-muted: #a89a9f;
+    --glass: rgba(255, 255, 255, 0.04);
+    --glass-border: rgba(255, 255, 255, 0.09);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Background Orbs */
+  .bg-orbs {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    animation: floatOrb 22s ease-in-out infinite;
+  }
+  .orb-1 {
+    width: 620px; height: 620px;
+    background: radial-gradient(circle, rgba(224,17,95,0.5) 0%, transparent 70%);
+    top: -160px; right: -120px;
+  }
+  .orb-2 {
+    width: 520px; height: 520px;
+    background: radial-gradient(circle, rgba(120,20,60,0.45) 0%, transparent 70%);
+    bottom: -120px; left: -100px;
+    animation-delay: -8s;
+  }
+  .orb-3 {
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, rgba(224,17,95,0.22) 0%, transparent 70%);
+    top: 42%; left: 28%;
+    animation-delay: -15s;
+  }
+  @keyframes floatOrb {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(50px,-40px) scale(1.06); }
+    66% { transform: translate(-40px,30px) scale(0.94); }
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  /* Cursor */
+  .cursor {
+    width: 8px; height: 8px;
+    background: var(--electric-wine);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.25s, height 0.25s;
+    mix-blend-mode: difference;
+  }
+  .cursor-follower {
+    width: 38px; height: 38px;
+    border: 1.5px solid rgba(224,17,95,0.6);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s, border-color 0.3s, background 0.3s;
+  }
+  .wave {
+    position: fixed;
+    border: 1.5px solid rgba(224,17,95,0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9997;
+    transform: translate(-50%, -50%);
+    animation: waveExpand 1.2s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  @keyframes waveExpand {
+    0% { width: 16px; height: 16px; opacity: 0.8; }
+    100% { width: 170px; height: 170px; opacity: 0; }
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0; width: 100%;
+    padding: 26px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background: linear-gradient(to bottom, rgba(5,5,5,0.93), transparent);
+    backdrop-filter: blur(16px);
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a:hover { color: var(--electric-wine-soft); }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0;
+    width: 0; height: 1px;
+    background: var(--electric-wine);
+    transition: width 0.35s;
+  }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 60px;
+  }
+  .hero-label {
+    font-size: 0.85rem;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--electric-wine);
+    margin-bottom: 28px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: heroIn 0.9s 0.2s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.2rem, 7vw, 5.8rem);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -2px;
+    margin-bottom: 28px;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: heroIn 0.9s 0.35s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  .hero h1 span { color: var(--electric-wine-soft); }
+  .hero-desc {
+    max-width: 560px;
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    margin-bottom: 48px;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: heroIn 0.9s 0.5s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 36px;
+    border: 1px solid rgba(224,17,95,0.5);
+    color: var(--text);
+    font-size: 0.95rem;
+    text-decoration: none;
+    border-radius: 100px;
+    transition: all 0.4s;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: heroIn 0.9s 0.65s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  .btn:hover {
+    border-color: var(--electric-wine);
+    box-shadow: 0 0 40px rgba(224,17,95,0.25);
+    transform: translateY(-3px);
+  }
+  @keyframes heroIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Sections */
+  section { padding: 140px 60px; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 600;
+    margin-bottom: 60px;
+  }
+  .section-title span { color: var(--electric-wine); }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 1s cubic-bezier(0.22,1,0.36,1), transform 1s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal.active { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* Advanced Liquid Glass */
+  .glass {
+    background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+    backdrop-filter: blur(24px) saturate(180%) brightness(1.05);
+    -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12);
+    transition: transform 0.5s, box-shadow 0.5s;
+  }
+  .glass:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 28px 60px rgba(0,0,0,0.5), 0 0 40px rgba(224,17,95,0.2);
+  }
+
+  /* About */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 48px;
+  }
+  .about-text { font-size: 1.1rem; color: var(--text-muted); font-weight: 300; line-height: 1.8; }
+  .about-text p { margin-bottom: 22px; }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .stat-card { padding: 32px; text-align: center; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    color: var(--electric-wine-soft);
+    margin-bottom: 8px;
+  }
+  .stat-label { font-size: 0.82rem; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; }
+
+  /* Skills */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  .skill-card { padding: 36px 32px; }
+  .skill-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(224,17,95,0.22), rgba(224,17,95,0.05));
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+    font-size: 1.4rem;
+    transition: transform 0.45s;
+  }
+  .skill-card:hover .skill-icon { transform: scale(1.15) rotate(6deg); }
+  .skill-card h3 { font-size: 1.2rem; margin-bottom: 12px; }
+  .skill-card p { font-size: 0.95rem; color: var(--text-muted); font-weight: 300; }
+
+  /* Work / Projects */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+  }
+  .project-card { overflow: hidden; }
+  .project-img {
+    height: 240px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  .project-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(5,5,5,0.85), transparent 60%);
+  }
+  .project-content { padding: 32px; }
+  .project-tag {
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--electric-wine);
+    margin-bottom: 12px;
+  }
+  .project-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.45rem;
+    margin-bottom: 12px;
+  }
+  .project-card p { font-size: 0.95rem; color: var(--text-muted); font-weight: 300; }
+
+  /* Contact */
+  .contact-wrapper {
+    max-width: 820px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 55px;
+    align-items: center;
+  }
+  .profile-img-wrap {
+    width: 190px; height: 190px;
+    border-radius: 50%;
+    position: relative;
+  }
+  .profile-img-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -7px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--electric-wine), transparent 65%);
+    opacity: 0.7;
+    animation: rotateBorder 10s linear infinite;
+  }
+  @keyframes rotateBorder { to { transform: rotate(360deg); } }
+  .profile-img {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    border: 3px solid rgba(255,255,255,0.1);
+    position: relative;
+    z-index: 1;
+  }
+  .contact-text {
+    font-size: 1.12rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    margin-bottom: 36px;
+    line-height: 1.7;
+  }
+  .contact-links { display: flex; flex-wrap: wrap; gap: 14px; }
+  .contact-btn {
+    padding: 15px 26px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 100px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    backdrop-filter: blur(16px);
+    transition: all 0.35s;
+  }
+  .contact-btn:hover {
+    border-color: var(--electric-wine);
+    box-shadow: 0 0 40px rgba(224,17,95,0.25);
+    transform: translateY(-4px);
+  }
+
+  footer {
+    padding: 40px 60px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 900px) {
+    nav, .hero, section, footer { padding-left: 28px; padding-right: 28px; }
+    .about-grid, .contact-wrapper { grid-template-columns: 1fr; }
+    .profile-img-wrap { margin: 0 auto 24px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<nav>
+  <div class="logo">PRASAD MAMIDI</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-label">Influencer · Creator · Developer</div>
+  <h1>Yesu Vara<br>Prasad <span>Mamidi</span></h1>
+  <p class="hero-desc">
+    Influencer, Video Editor & Videographer crafting visual stories — 
+    and an aspiring Software Developer building the future one line of code at a time.
+  </p>
+  <a href="#contact" class="btn">Let’s Connect →</a>
+</section>
+
+<section id="about">
+  <h2 class="section-title reveal">About <span>Me</span></h2>
+  <div class="about-grid">
+    <div class="about-text reveal reveal-delay-1">
+      <p>I’m Yesu Vara Prasad Mamidi — a content creator, video editor, and videographer who loves turning ideas into engaging visual stories.</p>
+      <p>Alongside content creation, I’m on a journey into software development — learning to build digital products that combine creativity with technology.</p>
+      <p>Whether it’s behind the camera, in the edit timeline, or writing code, my goal is the same: create work that feels intentional, polished, and memorable.</p>
+    </div>
+    <div class="stats reveal reveal-delay-2">
+      <div class="glass stat-card"><div class="stat-number">Video</div><div class="stat-label">Editing</div></div>
+      <div class="glass stat-card"><div class="stat-number">Content</div><div class="stat-label">Creation</div></div>
+      <div class="glass stat-card"><div class="stat-number">Visual</div><div class="stat-label">Storytelling</div></div>
+      <div class="glass stat-card"><div class="stat-number">Code</div><div class="stat-label">Aspiring Dev</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <h2 class="section-title reveal">What I <span>Do</span></h2>
+  <div class="skills-grid">
+    <div class="glass skill-card reveal reveal-delay-1">
+      <div class="skill-icon">▶</div>
+      <h3>Video Editing</h3>
+      <p>Clean cuts, smooth transitions, color grading and storytelling through the edit timeline.</p>
+    </div>
+    <div class="glass skill-card reveal reveal-delay-2">
+      <div class="skill-icon">◎</div>
+      <h3>Videography</h3>
+      <p>Capturing moments with intention — from cinematic shots to authentic everyday content.</p>
+    </div>
+    <div class="glass skill-card reveal reveal-delay-3">
+      <div class="skill-icon">✦</div>
+      <h3>Content Creation</h3>
+      <p>Building engaging content as an influencer across platforms and growing communities.</p>
+    </div>
+    <div class="glass skill-card reveal">
+      <div class="skill-icon">◈</div>
+      <h3>Software Development</h3>
+      <p>Aspiring developer learning to turn ideas into real digital products and experiences.</p>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <h2 class="section-title reveal">Selected <span>Work</span></h2>
+  <div class="projects-grid">
+    <div class="glass project-card reveal reveal-delay-1">
+      <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=800&q=80');"></div>
+      <div class="project-content">
+        <div class="project-tag">Content · Influencer</div>
+        <h3>Personal Brand Content</h3>
+        <p>Consistent content creation across Instagram building presence and connecting with audience.</p>
+      </div>
+    </div>
+    <div class="glass project-card reveal reveal-delay-2">
+      <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800&q=80');"></div>
+      <div class="project-content">
+        <div class="project-tag">Video Editing</div>
+        <h3>Short-form & Reels</h3>
+        <p>High-energy edits, smooth transitions and storytelling optimized for social platforms.</p>
+      </div>
+    </div>
+    <div class="glass project-card reveal reveal-delay-3">
+      <div class="project-img" style="background-image: url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=800&q=80');"></div>
+      <div class="project-content">
+        <div class="project-tag">Videography</div>
+        <h3>Visual Storytelling</h3>
+        <p>Capturing real moments and turning them into polished, engaging visual narratives.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2 class="section-title reveal">Let’s <span>Connect</span></h2>
+  <div class="contact-wrapper reveal">
+    <div class="profile-img-wrap">
+      <img src="profile.png" alt="Yesu Vara Prasad Mamidi" class="profile-img">
+    </div>
+    <div>
+      <p class="contact-text">
+        Open to collaborations, content projects, video work, and conversations around creative ideas or software development.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:yesuvaraprasadmamidi@gmail.com" class="contact-btn">yesuvaraprasadmamidi@gmail.com</a>
+        <a href="tel:+919398334458" class="contact-btn">+91 93983 34458</a>
+        <a href="https://www.linkedin.com/in/prasad-mamidi-716387341" target="_blank" class="contact-btn">LinkedIn</a>
+        <a href="https://www.instagram.com/prasadmamidii" target="_blank" class="contact-btn">@prasadmamidii</a>
+        <a href="https://www.instagram.com/prasadmamidivlogs" target="_blank" class="contact-btn">@prasadmamidivlogs</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>© 2025 Yesu Vara Prasad Mamidi. All rights reserved.</div>
+  <div>Crafted with intention</div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const follower = document.getElementById('cursorFollower');
+  let mouseX = 0, mouseY = 0, followerX = 0, followerY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+  });
+
+  function animateFollower() {
+    followerX += (mouseX - followerX) * 0.12;
+    followerY += (mouseY - followerY) * 0.12;
+    follower.style.left = followerX + 'px';
+    follower.style.top = followerY + 'px';
+    requestAnimationFrame(animateFollower);
+  }
+  animateFollower();
+
+  document.querySelectorAll('a, .glass, .btn').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '16px'; cursor.style.height = '16px';
+      follower.style.width = '56px'; follower.style.height = '56px';
+      follower.style.borderColor = 'rgba(224,17,95,0.9)';
+      follower.style.background = 'rgba(224,17,95,0.05)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '8px'; cursor.style.height = '8px';
+      follower.style.width = '38px'; follower.style.height = '38px';
+      follower.style.borderColor = 'rgba(224,17,95,0.6)';
+      follower.style.background = 'transparent';
+    });
+  });
+
+  let lastScroll = 0;
+  window.addEventListener('scroll', () => {
+    if (Math.abs(window.scrollY - lastScroll) > 12) createWave(mouseX, mouseY);
+    lastScroll = window.scrollY;
+  }, { passive: true });
+
+  function createWave(x, y) {
+    if (document.querySelectorAll('.wave').length > 4) return;
+    const wave = document.createElement('div');
+    wave.className = 'wave';
+    wave.style.left = x + 'px';
+    wave.style.top = y + 'px';
+    document.body.appendChild(wave);
+    setTimeout(() => wave.remove(), 1200);
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('active');
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
